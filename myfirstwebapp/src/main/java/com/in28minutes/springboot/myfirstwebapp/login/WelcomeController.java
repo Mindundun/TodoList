@@ -14,8 +14,9 @@ public class WelcomeController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String gotoWelcomePage(ModelMap model) {
 		model.put("name", getLoggedinUsername());
-		return "welcome";
+		return "index";
 	}
+	
 	
 	private String getLoggedinUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
