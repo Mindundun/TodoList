@@ -56,14 +56,18 @@ public class SpringSecurityConfiguration {
 	
 	//로그아웃 후 무조건 로그인 페이지로 가는 기능인데 이 기능으로 인해 H2 매핑 시 오류 발생 . .
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		http.authorizeHttpRequests(
-			auth -> auth.anyRequest().authenticated());
-		http.formLogin(withDefaults());
-		
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
-		
-		return http.build();
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    http
+	        .authorizeHttpRequests(auth -> auth
+	            .requestMatchers("/index.jsp").permitAll() // index.jsp 접근 허용
+	            .anyRequest().authenticated() // 그 외 요청은 인증 필요
+	        )
+	        .formLogin(withDefaults())
+	        .csrf().disable()
+	        .headers().frameOptions().disable();
+
+	    return http.build();
+	
 	}
+
 }
